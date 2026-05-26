@@ -1,5 +1,3 @@
-
-
 # Media Platform Systems
 
 Media platform system design interview preparation covering video streaming, content delivery, recommendation systems and large scale media architecture.
@@ -19,12 +17,19 @@ Focus:
 ## Directory Structure
 
 ```text
-media-systems/
+media-systems
+├── ContentModeration.md
+├── LiveStreaming.md
 ├── Netflix.md
 ├── README.md
 ├── Spotify.md
 └── YouTube.md
 ```
+
+Files:
+
+- 1 directory
+- 6 files
 
 ---
 
@@ -86,6 +91,44 @@ Interview Focus:
 
 ---
 
+### Live Streaming Infrastructure
+
+Coverage:
+
+- Stream Ingestion
+- CDN
+- Adaptive Bitrate Streaming
+- Video Transcoding
+- Streaming Protocols
+
+Interview Focus:
+
+- Low Latency Streaming
+- CDN Architecture
+- Streaming Scalability
+- Global Distribution
+
+---
+
+### Content Safety Platform
+
+Coverage:
+
+- Content Moderation
+- Rule Engine
+- ML Detection
+- Human Review
+- Moderation Pipeline
+
+Interview Focus:
+
+- Platform Safety
+- Queue Processing
+- ML Moderation
+- Scalability
+
+---
+
 ## Learning Focus
 
 - Distributed Systems
@@ -97,4 +140,34 @@ Interview Focus:
 - Production Design
 - Distributed Streaming
 - Large Scale Media Systems
+- Low Latency Streaming
+- Content Moderation Systems
+- Media Distribution Infrastructure
 - Interview Preparation
+
+---
+
+## Production Concepts
+
+Examples:
+
+```text
+Video Streaming Platform
+Live Sports Streaming
+Social Media Platform
+Music Streaming Infrastructure
+Content Moderation Platform
+Global CDN Distribution
+```
+
+---
+
+## Quick Revision
+
+- CDN improves media scalability
+- Adaptive bitrate reduces buffering
+- Recommendation systems improve engagement
+- Content moderation improves platform trust
+- Live streaming requires low latency architecture
+- Distributed media systems prioritize reliability
+- Media platforms require global scale infrastructure

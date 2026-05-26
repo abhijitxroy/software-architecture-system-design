@@ -1,73 +1,243 @@
-# system-design
+# Software Architecture & System Design
 
-    1. Scalability
-    2. Performance
-    3. Latency & throughput
-    4. Consistency
-    5. Availability
-    6. Partition tolerance
-    7. CAP Theorem ( Consistency,  Availability, Partition tolerance)
-    8. DNS ( which can be used to route traffic different services in our system)
-    9. CDN (How can be used, how types of CND there are?)
-    10. Load balancer & reverese proxy (how it can be used, how many types, how diff from reverese proxy)
-    11. Microservices
-    12. Databases (SQL <Mysql,postgres> & NoSQL<MongoDB, Cassandra>)
-    13. Caching (DB level apply or App level apply... or client side caching...means what type of caching will be applied when) Also need to know   the techniques to update cache (Redis, MemChache)
-    14. Message Queue (Kafka)
+Interview-first quick revision repository for Software Architecture, Distributed Systems and System Design.
 
-<img width="481" alt="image" src="https://github.com/abhijitxroy/system-design/assets/161963891/097aff50-b689-4fd2-bbf9-6a6824392018">
+Goal:
 
-S𝐭𝐞𝐩 1: 𝐂𝐥𝐚𝐫𝐢𝐟𝐲 𝐑𝐞𝐪𝐮𝐢𝐫𝐞𝐦𝐞𝐧𝐭𝐬:
--
-𝐅𝐮𝐧𝐜𝐭𝐢𝐨𝐧𝐚𝐥 𝐑𝐞𝐪𝐮𝐢𝐫𝐞𝐦𝐞𝐧𝐭𝐬:
-	
- 	• What is the scope of the system?
-	• What use cases / key features we need to support?
-𝐍𝐨𝐧-𝐟𝐮𝐧𝐜𝐭𝐢𝐨𝐧𝐚𝐥 𝐑𝐞𝐪𝐮𝐢𝐫𝐞𝐦𝐞𝐧𝐭𝐬:
-	
- 	• Consistency vs Availability?
-	• How big is the user base?
-	• What is the read/write ratio?
-	• What is the expected latency and throughput?
-	
-𝐒𝐭𝐞𝐩 2: 𝐂𝐚𝐩𝐚𝐜𝐢𝐭𝐲 𝐄𝐬𝐭𝐢𝐦𝐚𝐭𝐢𝐨𝐧
--
- 	• Estimate the number of read and write requests.
-	• Estimate the amount of database and cache storage required.
-	• Estimate the network bandwidth required.
-	
-𝐒𝐭𝐞𝐩 3: 𝐀𝐏𝐈 𝐃𝐞𝐬𝐢𝐠𝐧
--
-	• List the System APIs expected from the system based on the use cases.
-	• Define the API endpoints and request/response format.
-	
-𝐒𝐭𝐞𝐩 4: 𝐃𝐚𝐭𝐚𝐛𝐚𝐬𝐞 𝐃𝐞𝐬𝐢𝐠𝐧
--
-	• Choose the database type based one the needs. For example: SQL or NoSQL.
-	• Define the Database schema.
-	
-𝐒𝐭𝐞𝐩 5: 𝐇𝐢𝐠𝐡-𝐋𝐞𝐯𝐞𝐥 𝐃𝐞𝐬𝐢𝐠𝐧
--
-	• Sketch out the block diagram of the system.
-	• Identify major components like Databases, Servers, Clients, Load Balancers, CDN, Cache, Message Queues etc.
-	
-𝐒𝐭𝐞𝐩 6: 𝐃𝐢𝐯𝐞 𝐈𝐧𝐭𝐨 𝐊𝐞𝐲 𝐂𝐨𝐦𝐩𝐨𝐧𝐞𝐧𝐭𝐬
--
-	• Go into the specifics of each component. Discuss how each part will work and interact with others.
-	• Address how each component will scale and perform under load.
-	• What data structures and algorithms we need to use?
-	
-𝐒𝐭𝐞𝐩 7: 𝐀𝐝𝐝𝐫𝐞𝐬𝐬 𝐒𝐜𝐚𝐥𝐚𝐛𝐢𝐥𝐢𝐭𝐲, 𝐅𝐚𝐮𝐥𝐭 𝐓𝐨𝐥𝐞𝐫𝐚𝐧𝐜𝐞 & 𝐑𝐞𝐥𝐢𝐚𝐛𝐢𝐥𝐢𝐭𝐲
--
-	• Discuss how the system can scale using concepts like sharding, replication, and partitioning.
-	• Talk about caching strategies and where caching could be implemented.
-	• Discuss strategies for handling component failures, like using replicas, fallbacks, and retries.
-	• Discuss possible performance bottlenecks and how to address them.
-	• Do we need to throttle requests?
-	• Discuss authentication, authorization, data encryption, and other security best practices.
+- System Design Interviews
+- Backend Engineering
+- Distributed Systems
+- Production Architecture
+- Scalability Engineering
+- Quick Revision
 
-	This approach works well for most problems but may not be ideal for every type of problem, so feel free to adapt it according to the specific nuances of the interview question.
+---
 
+## Repository Structure
 
-Links: https://github.com/donnemartin/system-design-primer
--
+```text
+software-architecture-system-design/
+├── README.md
+├── CHANGELOG.md
+├── TODO.md
+├── design-app/
+├── diagrams/
+├── hld/
+├── lld/
+├── questions-answers/
+└── scalability/
+```
+
+---
+
+## Learning Path
+
+### Phase 1 — Fundamentals
+
+1. CAP Theorem
+2. Cache Strategy
+3. Database Selection
+4. DNS
+5. CDN
+6. SQL vs NoSQL
+7. Consistency Models
+
+---
+
+### Phase 2 — High Level Design
+
+8. Load Balancer
+9. API Gateway
+10. Reverse Proxy
+11. Rate Limiter
+12. Circuit Breaker
+13. Database Scaling
+14. Distributed Cache
+
+---
+
+### Phase 3 — Distributed Systems
+
+15. Replication
+16. Sharding
+17. Consistent Hashing
+18. Event Driven Architecture
+19. Distributed Lock
+20. Event Streaming & Messaging
+21. Observability
+
+---
+
+### Phase 4 — Low Level Design
+
+22. Elevator System
+23. Inventory System
+24. Notification System
+
+---
+
+### Phase 5 — Application Design
+
+25. Social Platforms
+26. Marketplace Platforms
+27. Messaging Platforms
+28. FinTech Systems
+29. AI Platforms
+30. Media Platforms
+31. Developer Platforms
+32. Data Platforms
+33. Cloud Platforms
+34. Security Systems
+35. Observability Systems
+
+---
+
+## Interview Focus Areas
+
+Topics frequently asked:
+
+- CAP Theorem
+- Cache Strategy
+- Database Scaling
+- Distributed Cache
+- Consistent Hashing
+- Replication
+- Sharding
+- SQL vs NoSQL
+- Kafka vs RabbitMQ
+- Rate Limiter
+- API Gateway
+- Distributed Lock
+- WebSocket vs SSE
+- Feed Generation
+- Event Driven Systems
+- Strong vs Eventual Consistency
+- System Design Tradeoffs
+
+---
+
+## Repository Sections
+
+### design-app/
+
+Production system design examples.
+
+Examples:
+
+- Ad Platforms
+- AI Platforms
+- Analytics Platforms
+- Cloud Platforms
+- Data Platforms
+- Developer Platforms
+- Experimentation Systems
+- FinTech Systems
+- Gaming Platforms
+- Marketplace Platforms
+- Map Location Systems
+- Media Systems
+- Messaging Systems
+- ML Platforms
+- Observability Systems
+- Search Systems
+- Security Systems
+- Social Platforms
+- Storage Systems
+
+---
+
+### questions-answers/
+
+Interview preparation material.
+
+Includes:
+
+- Technology Comparisons
+- Tradeoffs
+- Database Selection
+- Revision Notes
+- Interview Framework
+
+---
+
+### diagrams/
+
+Architecture visualization.
+
+Examples:
+
+- Cache Flow
+- Cache Patterns
+- CDN
+- API Gateway
+- Rate Limiter
+- Distributed Lock
+- Distributed Cache
+- Event Driven
+- Replication
+- Sharding
+- CAP Theorem
+- Microservices
+
+---
+
+### hld/
+
+High Level Design interview preparation.
+
+Topics:
+
+- API Gateway
+- Database Scaling
+- Circuit Breaker
+- Load Balancer
+- Rate Limiter
+
+---
+
+### lld/
+
+Low Level Design practice.
+
+Examples:
+
+- Elevator System
+- Inventory System
+- Notification System
+
+---
+
+### scalability/
+
+Core scalability concepts.
+
+Topics:
+
+- Replication
+- Sharding
+- Consistency Model
+- Horizontal vs Vertical Scaling
+
+---
+
+## Learning Goal
+
+This repository is designed for:
+
+- Interview Preparation
+- Production Understanding
+- Quick Revision
+- Long Term Learning
+- Architecture Visualization
+- Scalability Thinking
+- Long Term Interview Preparation
+
+---
+
+## Version
+
+Current Stable Release:
+
+```text
+v1.0.0
+```

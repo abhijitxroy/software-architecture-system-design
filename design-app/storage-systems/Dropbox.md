@@ -1,5 +1,3 @@
-
-
 # Dropbox System Design
 
 ## Problem Statement

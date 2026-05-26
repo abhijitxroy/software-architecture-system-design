@@ -1,22 +1,19 @@
 # Twitter System Design
 
-## Problem Statement
+## What is Twitter System?
 
-Design a Twitter-like social media platform.
+Twitter (X) is a large scale social platform that allows users to publish short messages, follow users and consume real time content.
 
-Features:
+Twitter system design focuses heavily on feed generation, scalability, cache strategy and distributed systems.
 
-- Post Tweet
-- Follow User
-- Like Tweet
-- Retweet
-- Timeline Feed
-- Search Tweet
+Twitter architecture is commonly used in system design interviews because it combines:
 
-Examples:
-
-- Twitter (X)
-- Threads
+- Feed generation
+- Real time updates
+- Distributed cache
+- Event driven systems
+- Large scale storage
+- High read throughput
 
 ---
 
@@ -24,201 +21,165 @@ Examples:
 
 System should support:
 
-1. Create Tweet
-
-2. View Timeline
-
-3. Follow User
-
-4. Like Tweet
-
-5. Retweet
-
-6. Search Tweet
+- Post Tweet
+- Delete Tweet
+- Follow User
+- Unfollow User
+- Like Tweet
+- Retweet
+- View Timeline
+- Search Tweet
 
 ---
 
 ## Non Functional Requirements
 
+Requirements:
+
 - High Availability
 - Scalability
 - Low Latency
 - Fault Tolerance
+- Reliability
 - High Throughput
 
-Interview Tip:
-
-Twitter interview mainly tests:
+Twitter is primarily:
 
 ```text
-Feed Generation
-+
-Scalability
+Read Heavy System
 ```
+
+Timeline generation dominates traffic.
 
 ---
 
 ## Capacity Estimation
 
-Assume:
+Assumptions:
 
 ```text
-300 Million Daily Active Users
+300 Million DAU
+200 Million Tweets Per Day
+Timeline Reads >> Tweet Writes
 ```
 
-Assume:
+Design implications:
 
-```text
-200 Million Tweets / Day
-```
-
-Interview Tip:
-
-Twitter system is:
-
-```text
-Read Heavy
-```
-
-Timeline reads are huge.
+- Cache required
+- Async processing required
+- Distributed storage required
 
 ---
 
-## API Design
-
-Create Tweet:
-
-```text
-POST /tweet/create
-```
-
-Get Timeline:
-
-```text
-GET /timeline/{userId}
-```
-
-Follow User:
-
-```text
-POST /follow
-```
-
-Like Tweet:
-
-```text
-POST /tweet/like
-```
-
----
-
-## Database Design
-
-User Table:
-
-| UserId | Name |
-|---------|------|
-| U101 | Roy |
-
-Tweet Table:
-
-| TweetId | UserId | Content |
-|----------|--------|----------|
-| T101 | U101 | Hello |
-
-Follow Table:
-
-| UserId | FollowUserId |
-|---------|---------------|
-| U101 | U102 |
-
-Database:
-
-SQL:
-
-- PostgreSQL
-
-NoSQL:
-
-- Cassandra
-
-Interview Tip:
-
-Timeline systems usually need:
-
-```text
-High Read Throughput
-```
-
----
-
-## High Level Design
+## High Level Architecture
 
 ```text
 Mobile Client
-
-↓
-
+      ↓
 Load Balancer
-
-↓
-
+      ↓
 API Gateway
-
-↓
-
+      ↓
 Tweet Service
-
-↓
-
+      ↓
 Kafka
-
-↓
-
+      ↓
 Feed Service
-
-↓
-
-Redis
-
-↓
-
+      ↓
+Redis Cache
+      ↓
 Database
 ```
 
 ---
 
-## Feed Generation
+## Core Components
 
-Most important interview topic.
+### Tweet Service
 
-### Fan Out On Write
+Responsibilities:
 
-New Tweet:
+- Create tweet
+- Delete tweet
+- Store metadata
+
+---
+
+### User Graph Service
+
+Stores:
 
 ```text
-Create Tweet
-
-↓
-
-Push To Followers Feed
+Follower Relationship
+Following Relationship
 ```
+
+Example:
+
+```text
+User A → User B
+```
+
+---
+
+### Feed Service
+
+Responsible for timeline generation.
+
+Responsibilities:
+
+- Feed ranking
+- Timeline generation
+- Tweet aggregation
+
+---
+
+### Cache Layer
+
+Examples:
+
+- Redis
+
+Cache stores:
+
+- Timeline cache
+- User profile
+- Tweet metadata
 
 Benefits:
 
+- Lower latency
+- Reduced database load
+
+---
+
+## Feed Generation Strategies
+
+### Fan Out On Write
+
+Flow:
+
+```text
+Create Tweet
+    ↓
+Push To Followers
+    ↓
+Timeline Updated
+```
+
+Advantages:
+
 - Faster reads
 
-Problem:
+Problems:
 
-Celebrity users.
+- Celebrity user problem
 
 Example:
 
 ```text
 100 Million Followers
 ```
-
-Heavy write pressure.
 
 ---
 
@@ -228,63 +189,60 @@ Flow:
 
 ```text
 Open Timeline
-
-↓
-
-Fetch Tweets
-
-↓
-
+      ↓
 Generate Feed
+      ↓
+Return Tweets
+```
+
+Advantages:
+
+- Lower write pressure
+
+Problems:
+
+- Higher read latency
+
+---
+
+### Hybrid Model
+
+Production systems commonly use:
+
+```text
+Normal User → Fan Out On Write
+Celebrity User → Fan Out On Read
 ```
 
 Benefits:
 
-- Lower write overhead
-
-Problem:
-
-Slower reads.
+- Better scalability
 
 ---
 
-## Push vs Pull
+## Database Design
 
-| Feature | Push | Pull |
-|----------|------|------|
-| Read Speed | Faster | Slower |
-| Write Cost | Higher | Lower |
-| Celebrity Issue | Yes | Better |
+Tweet Table:
 
-Interview Tip:
+| TweetId | UserId | Content |
+|----------|---------|----------|
+| T1001 | U123 | Hello |
 
-Production systems use:
+Follower Table:
 
-```text
-Hybrid Model
-```
+| UserId | FollowingId |
+|---------|-------------|
+| U123 | U456 |
 
----
+Storage examples:
 
-## Cache Strategy
+SQL:
 
-Use:
+- PostgreSQL
 
-```text
-Redis
-```
+NoSQL:
 
-Cache:
-
-- User Timeline
-- Tweet Data
-- User Profile
-
-Benefits:
-
-- Lower latency
-- Reduced database load
-- Faster timeline loading
+- Cassandra
 
 ---
 
@@ -292,8 +250,8 @@ Benefits:
 
 Application:
 
-- Horizontal Scaling
-- Load Balancer
+- Horizontal scaling
+- Load balancing
 
 Database:
 
@@ -304,56 +262,54 @@ Messaging:
 
 - Kafka
 
+Cache:
+
+- Redis Cluster
+
 ---
 
-## Bottleneck
+## Production Challenges
 
-Problems:
+Common issues:
 
-- Celebrity users
-- Feed generation pressure
-- Cache miss spike
+- Celebrity user problem
+- Cache invalidation
+- Feed latency
+- Timeline scaling
+- Database hotspot
 
 Solutions:
 
-- Redis
-- Kafka
+- Hybrid feed generation
+- Distributed cache
+- Queue systems
 - Sharding
-- Hybrid Feed Model
+- Async processing
 
 ---
 
 ## Interview Questions
 
-### Q1. Biggest Twitter challenge?
+1. Fan Out On Write vs Fan Out On Read?
 
-Feed generation.
+2. Why Twitter is read heavy?
 
----
+3. Celebrity user problem?
 
-### Q2. Fan Out On Write vs Fan Out On Read?
+4. Why Redis improves timeline performance?
 
-Write:
+5. How feed generation scales?
 
-Fast reads.
-
-Read:
-
-Lower write cost.
-
----
-
-### Q3. Why Redis used?
-
-Reduce database load.
+6. Twitter production bottlenecks?
 
 ---
 
 ## Quick Revision
 
-- Twitter → Read heavy
-- Redis → Timeline cache
-- Kafka → Async processing
-- Fan Out On Write → Fast read
-- Fan Out On Read → Lower write cost
-- Hybrid → Production approach
+- Twitter is read heavy
+- Redis improves feed latency
+- Kafka enables async processing
+- Hybrid feed model improves scaling
+- Cache reduces database pressure
+- Timeline generation drives architecture
+- Distributed systems improve scalability

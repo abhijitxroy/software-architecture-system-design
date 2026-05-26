@@ -1,4 +1,3 @@
-
 # Reddit System Design
 
 ## Problem Statement

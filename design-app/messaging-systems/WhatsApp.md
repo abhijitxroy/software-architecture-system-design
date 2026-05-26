@@ -3,15 +3,11 @@
 States:
 
 ```text
-Sent
-```
-
-```text
-Delivered
-```
-
-```text
-Read
+SENT
+ ↓
+DELIVERED
+ ↓
+READ
 ```
 
 ---
@@ -20,33 +16,34 @@ Read
 
 ### Q1. Why WebSocket used?
 
-Real time communication.
+Persistent low latency bidirectional communication.
 
 ---
 
 ### Q2. Why Kafka used?
 
-Async messaging.
+Async event processing and decoupled services.
 
 ---
 
 ### Q3. Why messaging systems use sharding?
 
-Scale writes.
+Distribute traffic and scale message storage.
 
 ---
 
 ### Q4. Biggest WhatsApp challenge?
 
-Massive concurrent traffic.
+Massive concurrent traffic with low latency and high reliability.
 
 ---
 
 ## Quick Revision
 
-- WhatsApp → Write heavy
-- WebSocket → Real time communication
-- Kafka → Async processing
-- Redis → Cache
+- WebSocket → Persistent connection
+- Kafka → Async event pipeline
+- Redis → Presence + cache
 - Sharding → Scale writes
-- Replication → Availability
+- Replication → Reliability
+- Message ordering critical for chat systems
+- Retry improves delivery guarantee

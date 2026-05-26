@@ -1,8 +1,6 @@
-
-
 # Search Systems
 
-Search system interview preparation covering search architecture, indexing systems, autocomplete engines and large scale discovery platforms.
+Search system interview preparation covering search architecture, indexing systems, crawling platforms and large scale discovery infrastructure.
 
 Focus:
 
@@ -11,21 +9,31 @@ Focus:
 - Ranking System
 - Indexing Pipeline
 - Auto Complete
+- Web Crawling
+- Spell Correction
 - Scalability
 - Reliability
+- Discovery Infrastructure
 
 ---
 
 ## Directory Structure
 
 ```text
-search-systems/
+search-systems
 ├── README.md
 ├── SearchAutocomplete.md
 ├── SearchEngine.md
+├── SpellCorrection.md
 ├── TinyURL.md
-└── URLShortener-Advanced.md
+├── URLShortener-Advanced.md
+└── WebCrawler.md
 ```
+
+Files:
+
+- 1 directory
+- 7 files
 
 ---
 
@@ -66,38 +74,60 @@ Interview Focus:
 
 ---
 
-### TinyURL
+### Spell Correction System
+
+Coverage:
+
+- Edit Distance
+- N Gram Matching
+- Candidate Generation
+- Ranking Layer
+- Query Correction
+
+Interview Focus:
+
+- Levenshtein Distance
+- Query Understanding
+- Search Relevance
+- Search Accuracy
+
+---
+
+### Web Crawler
+
+Coverage:
+
+- URL Discovery
+- Crawl Queue
+- Robots Handling
+- Distributed Crawling
+- Content Processing
+
+Interview Focus:
+
+- Crawl Scheduling
+- Large Scale Crawling
+- Distributed Queue
+- Reliability
+
+---
+
+### URL Systems
 
 Coverage:
 
 - URL Encoding
-- URL Decoding
-- Database Design
 - Cache Layer
-- Scaling Strategy
+- Distributed ID Generation
+- Click Analytics
+- Database Scaling
 
 Interview Focus:
 
 - Unique ID Generation
 - High Throughput Design
-
----
-
-### URL Shortener Advanced
-
-Coverage:
-
-- Distributed ID Generation
-- Analytics Tracking
-- Cache Layer
-- Database Partitioning
-- Click Analytics
-
-Interview Focus:
-
-- Scale URL Platform
-- Collision Prevention
 - Reliability
+- Platform Scalability
 
 ---
 
@@ -106,8 +136,38 @@ Interview Focus:
 - Distributed Systems
 - Search Architecture
 - Indexing System
-- Scalability
+- Ranking Systems
+- Query Processing
+- Web Crawling
+- Search Relevance
 - Cache Strategy
-- Reliability
+- Reliability Engineering
 - Production Design
 - Interview Preparation
+
+---
+
+## Production Concepts
+
+Examples:
+
+```text
+Search Engine Platform
+Enterprise Search Platform
+Documentation Search System
+URL Shortening Platform
+Knowledge Discovery Platform
+Distributed Crawling Infrastructure
+```
+
+---
+
+## Quick Revision
+
+- Crawlers discover searchable content
+- Indexing improves retrieval performance
+- Ranking determines search quality
+- Trie improves autocomplete latency
+- Spell correction improves search relevance
+- Distributed search systems prioritize scalability
+- Search platforms require reliability and low latency
