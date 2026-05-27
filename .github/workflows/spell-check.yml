@@ -11,14 +11,29 @@ on:
 
   workflow_dispatch:
 
+concurrency:
+  group: spell-check-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   spell-check:
     name: Spell Validation
     runs-on: ubuntu-latest
 
+    timeout-minutes: 10
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Run Spell Check
         uses: streetsidesoftware/cspell-action@v6
+        with:
+          files: "**/*.md"
+          incremental_files_only: false
+          config: ".github/cspell.json"

@@ -11,10 +11,15 @@ on:
 
   workflow_dispatch:
 
+concurrency:
+  group: docs-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   markdown-validation:
     name: Markdown Validation
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout Repository
@@ -26,14 +31,15 @@ jobs:
           node-version: 20
 
       - name: Install markdownlint
-        run: npm install -g markdownlint-cli
+        run: npm install -g markdownlint-cli markdown-link-check
 
       - name: Validate Markdown Files
-        run: markdownlint .
+        run: markdownlint . --ignore node_modules --ignore .github
 
   link-validation:
     name: Link Validation
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout Repository
@@ -41,3 +47,6 @@ jobs:
 
       - name: Validate Markdown Links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          config-file: '.github/mlc_config.json'
