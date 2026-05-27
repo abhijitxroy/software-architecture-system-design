@@ -1,15 +1,123 @@
 # Software Architecture & System Design
 
-Interview-first quick revision repository for Software Architecture, Distributed Systems and System Design.
+Structured engineering repository for learning, revision, and practical understanding of Software Architecture, Distributed Systems, Production Engineering, and System Design.
 
 Goal:
+
+Build practical understanding of designing systems that are:
+
+- Reliable
+- Scalable
+- Available
+- Resilient
+- Observable
+- Fault Tolerant
+- Production Ready
+
+Focus Areas:
 
 - System Design Interviews
 - Backend Engineering
 - Distributed Systems
 - Production Architecture
 - Scalability Engineering
+- Reliability Engineering
+- Failure Aware System Design
+- Production Engineering Understanding
+- Engineering Tradeoff Thinking
 - Quick Revision
+
+Objective:
+
+Build engineering understanding beyond interviews.
+
+Learn how systems scale, fail, recover, and operate reliably under real production conditions.
+
+---
+
+## Engineering Philosophy
+
+System Design is not only about APIs, databases, and architecture diagrams.
+
+Real engineering systems operate under failures, traffic growth, dependency issues, infrastructure instability, and operational challenges.
+
+Good system design focuses on building systems that are:
+
+- Reliable
+- Scalable
+- Available
+- Resilient
+- Observable
+- Fault Tolerant
+- Maintainable
+- Recoverable
+- Production Ready
+
+Production systems must handle:
+
+- Traffic growth
+- Dependency failures
+- Infrastructure failures
+- Resource exhaustion
+- Regional failures
+- Network instability
+- Operational mistakes
+- Disaster recovery scenarios
+
+System design is engineering tradeoff thinking.
+
+Requirements
+    ↓
+Architecture
+    ↓
+Scalability
+    ↓
+Reliability
+    ↓
+Resilience
+    ↓
+Observability
+    ↓
+Operational Excellence
+↓
+Production Readiness
+
+Questions engineers should continuously ask:
+
+- What breaks?
+- What survives?
+- Where is bottleneck?
+- How does system scale?
+- How does system recover?
+- How is blast radius controlled?
+
+Failure is expected.
+
+Engineering quality is determined by how systems behave during failure.
+
+Goal:
+
+Build systems that continue operating reliably under real production conditions.
+
+---
+
+## Repository Methodology
+
+This repository focuses on engineering thinking rather than definition memorization.
+
+Core principles:
+
+- Problem understanding
+- Tradeoff analysis
+- Production thinking
+- Reliability awareness
+- Failure handling
+- Operational thinking
+- Real engineering scenarios
+
+Engineering content philosophy:
+
+→ [Engineering Philosophy](ENGINEERING_PHILOSOPHY.md)
 
 ---
 
