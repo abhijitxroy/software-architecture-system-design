@@ -1,5 +1,7 @@
 # Software Architecture & System Design
 
+![Documentation CI](https://github.com/abhijitxroy/software-architecture-system-design/actions/workflows/docs-ci.yml/badge.svg)
+
 Structured engineering repository for learning, revision, and practical understanding of Software Architecture, Distributed Systems, Production Engineering, and System Design.
 
 Goal:
@@ -16,15 +18,14 @@ Build practical understanding of designing systems that are:
 
 Focus Areas:
 
-- System Design Interviews
 - Backend Engineering
 - Distributed Systems
 - Production Architecture
 - Scalability Engineering
 - Reliability Engineering
-- Failure Aware System Design
-- Production Engineering Understanding
-- Engineering Tradeoff Thinking
+- Failure-Aware System Design
+- Production Engineering Thinking
+- Engineering Tradeoff Analysis
 - Quick Revision
 
 Objective:
@@ -67,21 +68,20 @@ Production systems must handle:
 System design is engineering tradeoff thinking.
 
 Requirements  
-    ↓  
+↓  
 Architecture  
-    ↓  
+↓  
 Scalability  
-    ↓  
+↓  
 Reliability  
-    ↓  
+↓  
 Resilience  
-    ↓  
+↓  
 Observability  
-    ↓  
+↓  
 Operational Excellence  
-    ↓  
+↓  
 Production Readiness
-
 
 Questions engineers should continuously ask:
 
@@ -127,8 +127,10 @@ Engineering content philosophy:
 ```text
 software-architecture-system-design/
 ├── README.md
+├── ENGINEERING_PHILOSOPHY.md
 ├── CHANGELOG.md
 ├── TODO.md
+├── .github/
 ├── design-app/
 ├── diagrams/
 ├── hld/
@@ -201,9 +203,9 @@ software-architecture-system-design/
 
 ---
 
-## Interview Focus Areas
+## Revision Focus Areas
 
-Topics frequently asked:
+Core revision areas:
 
 - CAP Theorem
 - Cache Strategy
@@ -257,7 +259,7 @@ Examples:
 
 ### questions-answers/
 
-Interview preparation material.
+Revision material and engineering discussions.
 
 Includes:
 
@@ -265,7 +267,7 @@ Includes:
 - Tradeoffs
 - Database Selection
 - Revision Notes
-- Interview Framework
+- Production Engineering Discussions
 
 ---
 
@@ -292,7 +294,7 @@ Examples:
 
 ### hld/
 
-High Level Design interview preparation.
+High Level Design engineering understanding.
 
 Topics:
 
@@ -333,13 +335,27 @@ Topics:
 
 This repository is designed for:
 
-- Interview Preparation
-- Production Understanding
-- Quick Revision
-- Long Term Learning
+- Revision Friendly Learning
+- Production Engineering Understanding
+- System Design Thinking
 - Architecture Visualization
-- Scalability Thinking
-- Long Term Interview Preparation
+- Scalability Engineering
+- Reliability Awareness
+- Tradeoff Understanding
+- Operational Thinking
+- Long Term Engineering Learning
+
+---
+
+## Repository Standards
+
+Repository quality standards:
+
+- Documentation CI
+- Markdown Validation
+- Link Validation
+- Pull Request Standards
+- Engineering Philosophy Alignment
 
 ---
 

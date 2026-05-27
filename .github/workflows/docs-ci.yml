@@ -1,0 +1,43 @@
+name: Documentation CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  markdown-validation:
+    name: Markdown Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install markdownlint
+        run: npm install -g markdownlint-cli
+
+      - name: Validate Markdown Files
+        run: markdownlint .
+
+  link-validation:
+    name: Link Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate Markdown Links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1

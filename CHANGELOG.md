@@ -16,6 +16,9 @@ All notable changes to this repository will be documented here.
 - Operational thinking methodology
 - Reliability engineering mindset references
 - Repository methodology documentation
+- Documentation CI workflow
+- Markdown validation
+- Link validation
 
 ### Improved
 
@@ -25,6 +28,8 @@ All notable changes to this repository will be documented here.
 - Revision methodology
 - Engineering thinking guidance
 - Human-centric repository content principles
+- Repository engineering methodology
+- Documentation quality process
 
 ---
 
