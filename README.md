@@ -127,6 +127,7 @@ Engineering content philosophy:
 ```text
 software-architecture-system-design/
 ├── README.md
+├── LICENSE
 ├── ENGINEERING_PHILOSOPHY.md
 ├── CHANGELOG.md
 ├── TODO.md
@@ -356,6 +357,7 @@ Repository quality standards:
 - Link Validation
 - Pull Request Standards
 - Engineering Philosophy Alignment
+- Spell Validation
 
 ---
 

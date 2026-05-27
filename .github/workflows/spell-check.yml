@@ -1,0 +1,24 @@
+name: Spell Check
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  spell-check:
+    name: Spell Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Spell Check
+        uses: streetsidesoftware/cspell-action@v6

@@ -19,6 +19,8 @@ All notable changes to this repository will be documented here.
 - Documentation CI workflow
 - Markdown validation
 - Link validation
+- MIT License
+- Spell validation workflow
 
 ### Improved
 
@@ -29,7 +31,7 @@ All notable changes to this repository will be documented here.
 - Engineering thinking guidance
 - Human-centric repository content principles
 - Repository engineering methodology
-- Documentation quality process
+- Repository documentation quality process
 
 ---
 
