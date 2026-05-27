@@ -66,21 +66,22 @@ Production systems must handle:
 
 System design is engineering tradeoff thinking.
 
-Requirements
-    ↓
-Architecture
-    ↓
-Scalability
-    ↓
-Reliability
-    ↓
-Resilience
-    ↓
-Observability
-    ↓
-Operational Excellence
-↓
+Requirements  
+    ↓  
+Architecture  
+    ↓  
+Scalability  
+    ↓  
+Reliability  
+    ↓  
+Resilience  
+    ↓  
+Observability  
+    ↓  
+Operational Excellence  
+    ↓  
 Production Readiness
+
 
 Questions engineers should continuously ask:
 
