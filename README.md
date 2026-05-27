@@ -158,49 +158,49 @@ software-architecture-system-design/
 
 ### Phase 2 — High Level Design
 
-8. Load Balancer
-9. API Gateway
-10. Reverse Proxy
-11. Rate Limiter
-12. Circuit Breaker
-13. Database Scaling
-14. Distributed Cache
+1. Load Balancer
+2. API Gateway
+3. Reverse Proxy
+4. Rate Limiter
+5. Circuit Breaker
+6. Database Scaling
+7. Distributed Cache
 
 ---
 
 ### Phase 3 — Distributed Systems
 
-15. Replication
-16. Sharding
-17. Consistent Hashing
-18. Event Driven Architecture
-19. Distributed Lock
-20. Event Streaming & Messaging
-21. Observability
+1. Replication
+2. Sharding
+3. Consistent Hashing
+4. Event Driven Architecture
+5. Distributed Lock
+6. Event Streaming & Messaging
+7. Observability
 
 ---
 
 ### Phase 4 — Low Level Design
 
-22. Elevator System
-23. Inventory System
-24. Notification System
+1. Elevator System
+2. Inventory System
+3. Notification System
 
 ---
 
 ### Phase 5 — Application Design
 
-25. Social Platforms
-26. Marketplace Platforms
-27. Messaging Platforms
-28. FinTech Systems
-29. AI Platforms
-30. Media Platforms
-31. Developer Platforms
-32. Data Platforms
-33. Cloud Platforms
-34. Security Systems
-35. Observability Systems
+1. Social Platforms
+2. Marketplace Platforms
+3. Messaging Platforms
+4. FinTech Systems
+5. AI Platforms
+6. Media Platforms
+7. Developer Platforms
+8. Data Platforms
+9. Cloud Platforms
+10. Security Systems
+11. Observability Systems
 
 ---
 

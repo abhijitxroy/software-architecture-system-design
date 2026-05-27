@@ -240,7 +240,7 @@ Common in global applications.
 ## Sharding vs Replication
 
 | Feature | Sharding | Replication |
-|----------|-----------|--------------|
+| ------- | ----------- | ------------ |
 | Purpose | Scalability | Availability |
 | Data Split | Yes | No |
 | Data Copy | No | Yes |

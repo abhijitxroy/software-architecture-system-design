@@ -216,7 +216,7 @@ Most common production approach.
 ## Synchronous vs Asynchronous
 
 | Feature | Synchronous | Asynchronous |
-|----------|--------------|---------------|
+| ------- | ----------- | ------------ |
 | Speed | Slower | Faster |
 | Consistency | Strong | Eventual |
 | Latency | Higher | Lower |
