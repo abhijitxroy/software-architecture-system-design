@@ -37,6 +37,16 @@ The goal is building repositories that feel like:
 
 ---
 
+## Engineering Philosophy
+
+This repository follows a production-first engineering approach focused on tradeoff analysis, failure-aware design, operational thinking, reliability engineering, and scalable system architecture.
+
+For repository-wide engineering principles and content standards, see:
+
+- ENGINEERING_PHILOSOPHY.md
+
+---
+
 ## Repository Philosophy
 
 Software architecture changes significantly in real production environments.
@@ -280,6 +290,72 @@ software-architecture-system-design/
 ├── questions-answers/
 └── scalability/
 ```
+
+---
+
+## Recommended Learning Path
+
+### Foundation Path
+
+```text
+Questions & Answers
+        ↓
+Scalability Concepts
+        ↓
+HLD Fundamentals
+        ↓
+Distributed Systems Fundamentals
+        ↓
+Architecture Tradeoffs
+```
+
+### Architecture Path
+
+```text
+Load Balancer
+        ↓
+API Gateway
+        ↓
+Caching
+        ↓
+Database Scaling
+        ↓
+Messaging Systems
+        ↓
+Distributed Coordination
+```
+
+### Design Path
+
+```text
+HLD
+        ↓
+LLD
+        ↓
+Design Applications
+        ↓
+Production Architecture
+        ↓
+Reliability Engineering
+```
+
+### Advanced Path
+
+```text
+Replication
+        ↓
+Sharding
+        ↓
+Consistency Models
+        ↓
+Distributed Transactions
+        ↓
+Multi-Region Architecture
+        ↓
+Failure Recovery
+```
+
+This progression helps move from foundational concepts to production-scale architecture and distributed systems thinking.
 
 ---
 
