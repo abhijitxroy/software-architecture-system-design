@@ -1,137 +1,186 @@
 # Distributed Cache Diagram
 
-## Definition
+## Why It Matters
 
-Distributed cache stores cached data across multiple cache servers.
+A Distributed Cache stores cached data across multiple cache nodes instead of relying on a single cache server.
 
-Goal:
+As applications grow, a single cache server becomes a bottleneck because of:
 
-- Handle large traffic
-- Improve scalability
+- Memory limitations
+- CPU limitations
+- Network limitations
+- Availability risks
+
+Distributed caching helps systems:
+
+- Scale horizontally
+- Handle larger workloads
 - Improve availability
-- Reduce database pressure
+- Reduce database load
+- Improve performance
 
-Examples:
+Common use cases:
 
-- Redis Cluster
-- Memcached Cluster
+- Social Media Platforms
+- E-Commerce Systems
+- Streaming Platforms
+- Banking Applications
+- Search Systems
 
 ---
 
-## Why Distributed Cache Needed?
+## Single Cache Problem
 
-Single cache server:
+### Traditional Architecture
 
-```text
-Application
+```mermaid
+flowchart TD
 
-↓
+    App[Application]
+    Cache[(Single Cache)]
+    DB[(Database)]
 
-Redis Server
+    App --> Cache
+    Cache --> DB
 ```
 
 Problems:
 
-- Memory limitation
+- Limited memory
 - Single point of failure
 - Traffic bottleneck
-
-Example:
-
-```text
-100 Million Users
-
-↓
-
-Single Redis
-
-↓
-
-Slow Response
-```
+- Difficult scaling
 
 ---
 
 ## Distributed Cache Architecture
 
-```text
-Application
+```mermaid
+flowchart TD
 
-↓
+    App[Application]
 
-Cache Router
+    Router[Cache Router]
 
-↓
+    Cache1[(Cache Node 1)]
+    Cache2[(Cache Node 2)]
+    Cache3[(Cache Node 3)]
 
-Cache-1  Cache-2  Cache-3
+    App --> Router
+
+    Router --> Cache1
+    Router --> Cache2
+    Router --> Cache3
 ```
 
 Benefits:
 
-- Better scalability
+- Horizontal scaling
+- Better throughput
 - Better fault tolerance
-- Traffic distribution
+- Improved availability
+
+---
+
+## Production Request Flow
+
+```mermaid
+flowchart TD
+
+    Client[Client]
+
+    App[Application]
+
+    Router[Cache Router]
+
+    Cache[(Distributed Cache)]
+
+    DB[(Database)]
+
+    Client --> App
+    App --> Router
+    Router --> Cache
+    Cache --> DB
+```
+
+Flow:
+
+1. Request reaches application.
+2. Application queries distributed cache.
+3. Cache returns data if available.
+4. Database accessed on cache miss.
+5. Cache updated.
+6. Response returned.
 
 ---
 
 ## Data Distribution
 
-Data divided across cache nodes.
+Cache keys are distributed across multiple cache nodes.
 
-Example:
+### Example
 
 ```text
 User:1001
-
-↓
-
+      ↓
 Cache Node 1
-```
 
-```text
 User:2001
-
-↓
-
+      ↓
 Cache Node 2
-```
 
-```text
 User:3001
-
-↓
-
+      ↓
 Cache Node 3
 ```
 
+Benefits:
+
+- Better memory utilization
+- Improved throughput
+- Better scalability
+
 ---
 
-## Cache Partitioning (Sharding)
+## Cache Sharding
 
-Definition:
+Sharding divides cache data across multiple nodes.
 
-Split cache data into multiple cache servers.
+### Sharded Cache Architecture
+
+```mermaid
+flowchart TD
+
+    Users[Users]
+
+    S1[(Shard 1)]
+    S2[(Shard 2)]
+    S3[(Shard 3)]
+
+    Users --> S1
+    Users --> S2
+    Users --> S3
+```
 
 Example:
 
 ```text
 Shard 1
+→ User 1 - 100000
 
-User 1–100000
-```
-
-```text
 Shard 2
+→ User 100001 - 200000
 
-User 100001–200000
+Shard 3
+→ User 200001 - 300000
 ```
 
-Benefits:
+Advantages:
 
-- Better scalability
-- Lower memory pressure
+- Horizontal scaling
+- Better memory utilization
 
-Problem:
+Disadvantages:
 
 - Rebalancing complexity
 
@@ -139,433 +188,300 @@ Problem:
 
 ## Cache Replication
 
-Definition:
+Replication creates copies of cache data.
 
-Copy cache data into multiple nodes.
+### Replication Architecture
 
-Architecture:
+```mermaid
+flowchart TD
 
-```text
-Primary Cache
+    Primary[(Primary Cache)]
 
-↓
+    Replica1[(Replica 1)]
+    Replica2[(Replica 2)]
 
-Replica Cache
+    Primary --> Replica1
+    Primary --> Replica2
 ```
 
 Benefits:
 
 - High availability
 - Better fault tolerance
+- Faster recovery
 
-Problem:
+Disadvantages:
 
-```text
-Replication delay
-```
+- Replication delay
+- Additional infrastructure
 
 ---
 
 ## Consistent Hashing
 
-Definition:
+Consistent Hashing distributes cache keys efficiently.
 
-Technique to distribute cache keys efficiently.
-
-Example:
+### Traditional Hashing Problem
 
 ```text
-User:1001
-
-↓
-
-Hash Function
-
-↓
-
-Cache Node
-```
-
-Benefits:
-
-- Better distribution
-- Less data movement
-
-Interview Tip:
-
-Distributed cache interviews often ask:
-
-```text
-Consistent Hashing
+Add New Cache Node
+        ↓
+Most Keys Move
+        ↓
+Cache Miss Explosion
 ```
 
 ---
 
-## Cache Failure Scenario
+### Consistent Hashing Solution
 
-Before failure:
+```mermaid
+flowchart TD
 
-```text
-Cache-1
+    Key[Cache Key]
 
-Cache-2
+    Hash[Hash Function]
 
-Cache-3
+    Node[Cache Node]
+
+    Key --> Hash
+    Hash --> Node
 ```
 
-Cache-2 fails:
+Benefits:
+
+- Minimal data movement
+- Easier scaling
+- Better distribution
+
+---
+
+## Redis Cluster Architecture
+
+A common production implementation.
+
+```mermaid
+flowchart TD
+
+    App[Application]
+
+    Redis1[(Redis Node 1)]
+    Redis2[(Redis Node 2)]
+    Redis3[(Redis Node 3)]
+
+    App --> Redis1
+    App --> Redis2
+    App --> Redis3
+```
+
+Features:
+
+- Sharding
+- Replication
+- Failover
+- Horizontal scaling
+
+---
+
+## Failure Scenario
+
+### Single Cache Failure
+
+```mermaid
+flowchart TD
+
+    Cache[(Single Cache)]
+
+    Failure[Failure]
+
+    Cache --> Failure
+```
+
+Result:
 
 ```text
-Traffic Redirect
+Entire Cache Unavailable
+```
 
-↓
+---
 
-Remaining Nodes
+### Distributed Cache Failure
+
+```mermaid
+flowchart TD
+
+    Cache1[(Cache 1)]
+    Cache2[(Cache 2)]
+    Cache3[(Cache 3)]
+
+    Failure[Node Failure]
+
+    Cache2 --> Failure
+```
+
+Result:
+
+```text
+Remaining Nodes Continue Serving Traffic
 ```
 
 Benefits:
 
 - Better resilience
+- Improved availability
 
 ---
 
-## Production Example
+## Cache Rebalancing
 
-Instagram Feed:
+When adding new nodes:
 
-Without distributed cache:
+```mermaid
+flowchart TD
 
-```text
-Database
+    Existing[Existing Cluster]
 
-↓
+    NewNode[New Cache Node]
 
-Heavy Traffic
+    Rebalance[Rebalance Data]
 
-↓
-
-Slow System
+    Existing --> NewNode
+    NewNode --> Rebalance
 ```
 
-With distributed cache:
+Challenges:
+
+- Data movement
+- Temporary performance impact
+
+---
+
+## Production Examples
+
+### Redis Cluster
+
+Used For:
+
+- User sessions
+- Shopping carts
+- Product catalogs
+- API responses
+
+---
+
+### Memcached Cluster
+
+Used For:
+
+- High-speed caching
+- Large-scale web applications
+
+---
+
+### Hazelcast
+
+Used For:
+
+- In-memory data grids
+- Enterprise applications
+
+---
+
+### Apache Ignite
+
+Used For:
+
+- Distributed caching
+- Distributed computing
+
+---
+
+## Common Production Problems
+
+### Hot Keys
+
+Symptoms:
 
 ```text
-Redis Cluster
+One Cache Node Overloaded
+```
 
-↓
+Cause:
 
-Fast Feed Loading
+```text
+Popular Key Receives Most Traffic
 ```
 
 ---
 
-## Production Tools
+### Cache Rebalancing
 
-- Redis Cluster
-- Memcached
-- Hazelcast
-- Apache Ignite
+Symptoms:
+
+```text
+Temporary Performance Degradation
+```
+
+Cause:
+
+```text
+Adding Or Removing Nodes
+```
+
+---
+
+### Replication Lag
+
+Symptoms:
+
+```text
+Stale Cache Reads
+```
+
+Cause:
+
+```text
+Replication Delay
+```
+
+---
+
+### Cache Stampede
+
+Symptoms:
+
+```text
+Database Traffic Spike
+```
+
+Cause:
+
+```text
+Simultaneous Cache Expiration
+```
 
 ---
 
 ## Interview Questions
 
-### Q1. Why distributed cache needed?
+### Basic
 
-Improve scalability and availability.
+- What is a Distributed Cache?
+- Why do we need Distributed Cache?
+- What problems does it solve?
 
----
+### Intermediate
 
-### Q2. Sharding vs Replication?
+- Sharding vs Replication?
+- Why is Consistent Hashing used?
+- What is Redis Cluster?
 
-Sharding:
+### Advanced
 
-Split cache data.
-
-Replication:
-
-Copy cache data.
-
----
-
-### Q3. Why Consistent Hashing used?
-
-Reduce cache redistribution.
-
----
-
-## Quick Revision
-
-- Distributed cache → Multiple cache servers
-- Sharding → Split cache
-- Replication → Copy cache
-- Consistent Hashing → Better distribution
-- Redis Cluster → Production example
-- Distributed cache → Scalability + availability
-# Distributed Cache Diagram
-
-## Purpose
-
-Distributed cache stores cached data across multiple cache servers.
-
-Goals:
-
-- Improve scalability
-- Improve availability
-- Reduce database load
-- Improve throughput
-- Handle large traffic
-
-Examples:
-
-- Redis Cluster
-- Memcached Cluster
-- Hazelcast
-- Apache Ignite
-
----
-
-## Why Distributed Cache?
-
-Without Distributed Cache:
-
-```text
-Application
- ↓
-Single Cache Server
- ↓
-Database
-```
-
-Problems:
-
-- Memory limitation
-- Single point of failure
-- Traffic bottleneck
-- Lower scalability
-
-Example:
-
-```text
-100 Million Users
-↓
-Single Redis Server
-↓
-Slow Response
-```
-
-With Distributed Cache:
-
-```text
-Application
- ↓
-Cache Router
- ↓
-Multiple Cache Nodes
-```
-
-Benefits:
-
-- Better scalability
-- Better resilience
-- Better traffic distribution
-
----
-
-## Distributed Cache Architecture
-
-```text
-Application
- ↓
-Cache Router
- ↓
-Cache-1   Cache-2   Cache-3
-```
-
-Responsibilities:
-
-- Traffic distribution
-- Key routing
-- Better load balancing
-
----
-
-## Data Distribution
-
-Cache keys distributed across nodes.
-
-Example:
-
-```text
-User:1001
-↓
-Cache Node 1
-
-User:2001
-↓
-Cache Node 2
-
-User:3001
-↓
-Cache Node 3
-```
-
-Benefits:
-
-- Better throughput
-- Better memory utilization
-
----
-
-## Cache Partitioning (Sharding)
-
-Definition:
-
-Split cache data across multiple cache servers.
-
-Example:
-
-```text
-Shard 1
-↓
-User 1-100000
-
-Shard 2
-↓
-User 100001-200000
-```
-
-Benefits:
-
-- Better scalability
-- Lower memory pressure
-
-Problem:
-
-```text
-Shard Rebalancing
-```
-
----
-
-## Cache Replication
-
-Definition:
-
-Copy cache data across multiple nodes.
-
-Flow:
-
-```text
-Primary Cache
- ↓
-Replica Cache
-```
-
-Benefits:
-
-- Better fault tolerance
-- High availability
-
-Problem:
-
-```text
-Replication Delay
-```
-
----
-
-## Consistent Hashing
-
-Definition:
-
-Distribute cache keys efficiently.
-
-Flow:
-
-```text
-Cache Key
-↓
-Hash Function
-↓
-Cache Node
-```
-
-Benefits:
-
-- Better distribution
-- Less redistribution during scaling
-
-Best For:
-
-- Distributed cache scaling
-
----
-
-## Cache Failure Scenario
-
-Before Failure:
-
-```text
-Cache-1
-Cache-2
-Cache-3
-```
-
-Node Failure:
-
-```text
-Cache-2 Down
-↓
-Traffic Redirect
-↓
-Remaining Nodes
-```
-
-Benefits:
-
-- Better resilience
-- Better availability
-
----
-
-## Production Example
-
-Social Feed System:
-
-Without Distributed Cache:
-
-```text
-Database
-↓
-Heavy Traffic
-↓
-Slow Response
-```
-
-With Distributed Cache:
-
-```text
-Redis Cluster
-↓
-Fast Feed Loading
-```
-
----
-
-## Interview Notes
-
-Common discussion:
-
-```text
-Distributed Cache vs Single Cache
-
-Consistent Hashing
-
-Cache Sharding
-
-Replication Delay
-```
+- How would you scale Redis?
+- How would you handle hot keys?
+- How does Consistent Hashing work?
+- How would you design a cache for 100 million users?
 
 ---
 
@@ -576,14 +492,40 @@ Distributed Cache
 → Multiple Cache Nodes
 
 Sharding
-→ Split Cache Data
+→ Split Data Across Nodes
 
 Replication
-→ Copy Cache Data
+→ Copy Data Across Nodes
 
 Consistent Hashing
-→ Better Distribution
+→ Efficient Key Distribution
 
-Distributed Cache
-→ Scalability + Availability
+Redis Cluster
+→ Distributed Redis
+
+Hot Key
+→ Uneven Traffic
+
+Main Benefits
+→ Scalability
+→ Availability
+→ Performance
+→ Fault Tolerance
 ```
+
+---
+
+## Key Concepts
+
+| Concept | Description |
+|----------|----------|
+| Distributed Cache | Multiple cache nodes |
+| Sharding | Data partitioning |
+| Replication | Data duplication |
+| Consistent Hashing | Efficient key distribution |
+| Redis Cluster | Distributed Redis deployment |
+| Hot Key | Uneven traffic concentration |
+| Rebalancing | Data redistribution |
+| Cache Router | Routes cache requests |
+| Fault Tolerance | Survive node failures |
+| Horizontal Scaling | Add more nodes |

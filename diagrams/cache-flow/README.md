@@ -1,445 +1,202 @@
 # Cache Flow Diagram
 
-## Definition
+## Why It Matters
 
-Cache flow explains how application requests move between Client, Cache and Database.
+Caching is one of the most important techniques used to improve application performance and scalability.
 
-Goal:
+Instead of repeatedly reading data from a database, frequently accessed data is stored in a faster storage layer called a cache.
+
+Caching helps:
 
 - Reduce database load
 - Improve response time
+- Reduce latency
 - Improve scalability
+- Increase throughput
+- Improve user experience
 
----
-
-## Why Cache Needed?
-
-Without Cache:
-
-```text
-Client
-
-↓
-
-Application
-
-↓
-
-Database
-```
-
-Problems:
-
-- Slow response
-- Database overload
-- Increased latency
-
----
-
-## Cache Flow
-
-```text
-Client
-
-↓
-
-Application
-
-↓
-
-Cache
-
-↓
-
-Database
-```
-
----
-
-## Cache Hit
-
-Definition:
-
-Requested data found in cache.
-
-Flow:
-
-```text
-Client
-
-↓
-
-Application
-
-↓
-
-Cache
-
-↓
-
-Data Found
-
-↓
-
-Return Response
-```
-
-Benefits:
-
-- Faster response
-- Reduced database load
-
-Example:
-
-```text
-User Profile
-
-Already Cached
-
-↓
-
-Return Directly
-```
-
----
-
-## Cache Miss
-
-Definition:
-
-Requested data not available in cache.
-
-Flow:
-
-```text
-Client
-
-↓
-
-Application
-
-↓
-
-Cache
-
-↓
-
-Data Missing
-
-↓
-
-Database
-
-↓
-
-Cache Updated
-
-↓
-
-Response Returned
-```
-
-Problems:
-
-- Higher latency
-- Database access needed
-
----
-
-## Cache Aside Pattern
-
-Most common pattern.
-
-Flow:
-
-```text
-Read Request
-
-↓
-
-Check Cache
-
-↓
-
-Cache Miss
-
-↓
-
-Read Database
-
-↓
-
-Update Cache
-
-↓
-
-Return Response
-```
+Caching is used in almost every large-scale production system.
 
 Examples:
 
-- Redis
-- Memcached
+- E-Commerce Platforms
+- Social Media Platforms
+- Streaming Platforms
+- Banking Systems
+- Search Systems
+- SaaS Applications
 
 ---
 
-## Write Through Cache
+## High-Level Architecture
 
-Flow:
+```mermaid
+flowchart TD
 
-```text
-Write Request
+    Client[Client]
+    App[Application]
+    Cache[(Cache)]
+    DB[(Database)]
 
-↓
-
-Cache Update
-
-↓
-
-Database Update
+    Client --> App
+    App --> Cache
+    Cache --> DB
 ```
 
-Benefits:
+The cache sits between the application and database.
 
-- Data consistency
-
-Problem:
-
-- Slower writes
+Frequently accessed data is served directly from the cache.
 
 ---
 
-## Write Back Cache
+## Production Request Flow
 
-Flow:
+```mermaid
+flowchart TD
 
-```text
-Write Request
+    User[Client]
+    CDN[CDN]
+    LB[Load Balancer]
+    Gateway[API Gateway]
+    App[Application Service]
+    Cache[(Redis Cache)]
+    DB[(Database)]
 
-↓
+    User --> CDN
+    CDN --> LB
+    LB --> Gateway
+    Gateway --> App
 
-Cache Update
-
-↓
-
-Database Update Later
+    App --> Cache
+    Cache --> DB
 ```
 
-Benefits:
+Typical production flow:
 
-- Faster writes
-
-Problem:
-
-- Data loss risk
-
----
-
-## Cache Eviction Policies
-
-### LRU
-
-Least Recently Used.
-
-Old unused data removed.
+1. Client sends request.
+2. Request reaches application.
+3. Application checks cache.
+4. Cache returns data if available.
+5. Database accessed only when needed.
+6. Response returned to client.
 
 ---
 
-### LFU
+## Why Do We Need Cache?
 
-Least Frequently Used.
+### Without Cache
 
-Less accessed data removed.
+```mermaid
+flowchart TD
 
----
+    Client
+    App[Application]
+    DB[(Database)]
 
-### TTL
-
-Time based expiration.
-
-Example:
-
-```text
-User Session
-
-30 Minutes
-```
-
----
-
-## Production Example
-
-E-Commerce Product Page:
-
-Without Cache:
-
-```text
-Client
-
-↓
-
-Database
-
-Every Request
-```
-
-With Cache:
-
-```text
-Client
-
-↓
-
-Redis
-
-↓
-
-Database Only Cache Miss
-```
-
----
-
-## Interview Questions
-
-### Q1. Cache Hit vs Cache Miss?
-
-Cache Hit:
-
-Data found in cache.
-
-Cache Miss:
-
-Database lookup needed.
-
----
-
-### Q2. Most common cache pattern?
-
-Cache Aside.
-
----
-
-### Q3. Why Redis used?
-
-- Fast
-- In-memory
-- Scalable
-
----
-
-## Quick Revision
-
-- Cache → Faster response
-- Cache Hit → Fast path
-- Cache Miss → Database access
-- Cache Aside → Most common
-- LRU → Remove old data
-- Redis → Production cache
-# Cache Flow Diagram
-
-## Purpose
-
-Cache flow explains how requests move between application, cache and database.
-
-Goals:
-
-- Lower latency
-- Reduce database load
-- Improve scalability
-- Improve throughput
-- Improve user experience
-
----
-
-## Why Cache?
-
-Without Cache:
-
-```text
-Client
- ↓
-Application
- ↓
-Database
+    Client --> App
+    App --> DB
 ```
 
 Problems:
 
-- Slow response
-- Database overload
 - Higher latency
-- Lower scalability
+- Increased database load
+- Reduced scalability
+- Higher infrastructure cost
 
-With Cache:
+---
 
-```text
-Client
- ↓
-Application
- ↓
-Cache
- ↓
-Database
+### With Cache
+
+```mermaid
+flowchart TD
+
+    Client
+    App[Application]
+    Cache[(Cache)]
+    DB[(Database)]
+
+    Client --> App
+    App --> Cache
+    Cache --> DB
 ```
 
 Benefits:
 
-- Faster response
-- Lower database traffic
+- Faster responses
+- Reduced database traffic
 - Better scalability
+- Improved user experience
 
 ---
 
 ## Cache Hit Flow
 
-Requested data already exists in cache.
+A Cache Hit occurs when requested data already exists in cache.
 
-Flow:
+```mermaid
+flowchart TD
+
+    Request[Request]
+    Cache[(Cache)]
+
+    Hit[Cache Hit]
+    Response[Return Response]
+
+    Request --> Cache
+    Cache --> Hit
+    Hit --> Response
+```
+
+Example:
 
 ```text
-Client
- ↓
-Application
- ↓
-Cache
- ↓ HIT
+User Profile Request
+        ↓
+Profile Found In Redis
+        ↓
 Return Response
 ```
 
 Benefits:
 
-- Fast response
+- Extremely fast response
+- No database access
 - Lower infrastructure load
-
-Example:
-
-```text
-User Profile
-↓
-Already Cached
-↓
-Return Response
-```
 
 ---
 
 ## Cache Miss Flow
 
-Requested data not found in cache.
+A Cache Miss occurs when requested data is not available in cache.
 
-Flow:
+```mermaid
+flowchart TD
+
+    Request[Request]
+    Cache[(Cache)]
+    DB[(Database)]
+
+    Update[Update Cache]
+    Response[Return Response]
+
+    Request --> Cache
+    Cache --> DB
+    DB --> Update
+    Update --> Response
+```
+
+Example:
 
 ```text
-Client
- ↓
-Application
- ↓
-Cache
- ↓ MISS
-Database
- ↓
-Cache Update
- ↓
+Product Request
+        ↓
+Not Found In Cache
+        ↓
+Read Database
+        ↓
+Update Cache
+        ↓
 Return Response
 ```
 
@@ -452,27 +209,47 @@ Problems:
 
 ## Cache Aside Pattern
 
-Most common production pattern.
+The most common caching pattern in production systems.
+
+```mermaid
+flowchart TD
+
+    Request[Read Request]
+    Cache[(Cache)]
+    DB[(Database)]
+
+    Request --> Cache
+    Cache --> DB
+    DB --> Cache
+```
 
 Flow:
 
 ```text
 Read Request
- ↓
+      ↓
 Check Cache
- ↓ MISS
+      ↓
+Cache Miss
+      ↓
 Read Database
- ↓
+      ↓
 Update Cache
- ↓
+      ↓
 Return Response
 ```
 
+Advantages:
+
+- Simple
+- Flexible
+- Widely adopted
+
 Best For:
 
-- Read heavy systems
-- Product catalog
-- User profile
+- Product catalogs
+- User profiles
+- Read-heavy systems
 
 ---
 
@@ -480,137 +257,353 @@ Best For:
 
 Application updates cache and database together.
 
+```mermaid
+flowchart TD
+
+    Request[Write Request]
+    Cache[(Cache)]
+    DB[(Database)]
+
+    Request --> Cache
+    Cache --> DB
+```
+
 Flow:
 
 ```text
 Write Request
- ↓
-Cache Update
- ↓
-Database Update
+      ↓
+Update Cache
+      ↓
+Update Database
 ```
 
-Benefits:
+Advantages:
 
-- Better consistency
+- Strong consistency
+- Cache always up-to-date
 
-Problem:
+Disadvantages:
 
-- Higher write latency
+- Slower writes
 
 ---
 
 ## Write Back Cache
 
-Application updates cache immediately.
+Application updates cache first.
 
-Database update happens later.
+Database updated later asynchronously.
 
-Flow:
+```mermaid
+flowchart TD
 
-```text
-Write Request
- ↓
-Cache Update
- ↓ Async
-Database Update
+    Request[Write Request]
+    Cache[(Cache)]
+
+    Async[Async Processing]
+
+    DB[(Database)]
+
+    Request --> Cache
+    Cache --> Async
+    Async --> DB
 ```
 
-Benefits:
+Advantages:
 
-- Faster writes
+- Very fast writes
+- Reduced database load
 
-Problem:
+Disadvantages:
 
-- Data loss risk
+- Potential data loss
+- More complex recovery
+
+---
+
+## Write Around Cache
+
+Application writes directly to database.
+
+Cache updated only during reads.
+
+```mermaid
+flowchart TD
+
+    Request[Write Request]
+    DB[(Database)]
+
+    Request --> DB
+```
+
+Advantages:
+
+- Avoids cache pollution
+
+Best For:
+
+- Write-heavy workloads
 
 ---
 
 ## Cache Eviction Policies
 
-### LRU
+### LRU (Least Recently Used)
+
+Removes the least recently accessed data.
 
 ```text
-Least Recently Used
-↓
-Old Data Removed
+Recently Used
+      ↓
+Keep
+
+Not Used Recently
+      ↓
+Evict
 ```
 
 Best For:
 
-- General caching
+- General-purpose caching
 
 ---
 
-### LFU
+### LFU (Least Frequently Used)
+
+Removes the least frequently accessed data.
 
 ```text
-Least Frequently Used
-↓
-Less Accessed Data Removed
+Access Frequency
+      ↓
+Low Usage
+      ↓
+Evict
 ```
 
 Best For:
 
-- Stable access pattern
+- Stable access patterns
 
 ---
 
-### TTL
+### TTL (Time To Live)
+
+Data expires automatically after a specified time.
 
 ```text
-Time To Live
-↓
+Session Data
+      ↓
+30 Minutes
+      ↓
 Automatic Expiration
 ```
 
-Example:
+Best For:
 
-```text
-User Session
-↓
-30 Minutes
-```
+- Session management
+- Temporary data
 
 ---
 
-## Production Example
+## Distributed Cache Architecture
 
-E Commerce Product Page:
+Large-scale systems use distributed caches.
 
-Without Cache:
+```mermaid
+flowchart TD
 
-```text
-Client
- ↓
-Database
- ↓
-Every Request
+    App1[Application 1]
+    App2[Application 2]
+    App3[Application 3]
+
+    Redis[(Distributed Redis)]
+
+    App1 --> Redis
+    App2 --> Redis
+    App3 --> Redis
 ```
 
-With Cache:
+Benefits:
 
-```text
-Client
- ↓
-Redis
- ↓ MISS
-Database
-```
+- Shared cache
+- Horizontal scaling
+- Better resource utilization
+
+Common Technologies:
+
+- Redis
+- Memcached
+- Hazelcast
 
 ---
 
-## Interview Notes
+## Failure Scenario
 
-Common discussion:
+### Cache Failure
 
-```text
-Cache Hit vs Cache Miss
+```mermaid
+flowchart TD
 
-Cache Aside vs Write Through
+    Cache[(Cache Failure)]
+    DB[(Database)]
 
-Redis vs Memcached
+    Cache --> DB
 ```
+
+Impact:
+
+- Traffic shifts to database
+- Increased latency
+- Potential database overload
+
+---
+
+### Cache Stampede
+
+Many requests simultaneously miss cache.
+
+```mermaid
+flowchart TD
+
+    Requests[Many Requests]
+    Cache[(Cache Miss)]
+
+    DB[(Database)]
+
+    Requests --> Cache
+    Cache --> DB
+```
+
+Impact:
+
+- Sudden database spike
+- Performance degradation
+
+Common Solutions:
+
+- Request Coalescing
+- Distributed Locks
+- Pre-Warming Cache
+
+---
+
+## Production Examples
+
+### Redis
+
+Most popular production cache.
+
+Used for:
+
+- Session caching
+- API caching
+- User profiles
+- Shopping carts
+
+---
+
+### Memcached
+
+Used for:
+
+- Simple key-value caching
+- High-speed lookups
+
+---
+
+### CDN Cache
+
+Used for:
+
+- Images
+- Videos
+- Static assets
+
+---
+
+### Database Query Cache
+
+Used for:
+
+- Expensive SQL queries
+- Aggregation results
+
+---
+
+## Common Production Problems
+
+### Low Cache Hit Rate
+
+Symptoms:
+
+- High database load
+
+Possible Causes:
+
+- Poor cache strategy
+- Small cache size
+
+---
+
+### Stale Data
+
+Symptoms:
+
+- Users see outdated data
+
+Possible Causes:
+
+- Incorrect invalidation logic
+
+---
+
+### Cache Stampede
+
+Symptoms:
+
+- Database traffic spikes
+
+Possible Causes:
+
+- Simultaneous cache expiration
+
+---
+
+### Memory Exhaustion
+
+Symptoms:
+
+- Increased eviction
+- Performance degradation
+
+Possible Causes:
+
+- Insufficient cache capacity
+
+---
+
+## Interview Questions
+
+### Basic
+
+- What is caching?
+- Why do we use cache?
+- What is Cache Hit?
+- What is Cache Miss?
+
+### Intermediate
+
+- Cache Aside vs Write Through?
+- LRU vs LFU?
+- Redis vs Memcached?
+
+### Advanced
+
+- What is Cache Stampede?
+- How would you design distributed caching?
+- How would you handle stale cache data?
+- How would you improve cache hit ratio?
 
 ---
 
@@ -618,17 +611,56 @@ Redis vs Memcached
 
 ```text
 Cache
-→ Faster Response
+→ Faster Responses
 
 Cache Hit
-→ Fast Path
+→ Data Found In Cache
 
 Cache Miss
-→ Database Access
+→ Database Access Required
 
 Cache Aside
 → Most Common Pattern
 
+Write Through
+→ Better Consistency
+
+Write Back
+→ Faster Writes
+
+Redis
+→ Most Popular Cache
+
 LRU
-→ Remove Old Data
+→ Remove Least Recently Used
+
+LFU
+→ Remove Least Frequently Used
+
+TTL
+→ Automatic Expiration
+
+Main Benefits
+→ Performance
+→ Scalability
+→ Lower Database Load
 ```
+
+---
+
+## Key Concepts
+
+| Concept | Description |
+|----------|----------|
+| Cache | Fast storage layer |
+| Cache Hit | Data found in cache |
+| Cache Miss | Database lookup required |
+| Cache Aside | Most common cache strategy |
+| Write Through | Cache and DB updated together |
+| Write Back | Database updated asynchronously |
+| LRU | Least Recently Used eviction |
+| LFU | Least Frequently Used eviction |
+| TTL | Automatic expiration |
+| Redis | Distributed in-memory cache |
+| Cache Stampede | Massive cache miss event |
+| Distributed Cache | Shared cache cluster |

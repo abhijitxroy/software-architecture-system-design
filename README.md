@@ -300,6 +300,8 @@ software-architecture-system-design/
 ```text
 Questions & Answers
         ↓
+Architecture Diagrams
+        ↓
 Scalability Concepts
         ↓
 HLD Fundamentals
@@ -359,6 +361,40 @@ This progression helps move from foundational concepts to production-scale archi
 
 ---
 
+## Diagram Learning Path
+
+For visual learners, the recommended diagram progression is:
+
+```text
+Load Balancer
+        ↓
+API Gateway
+        ↓
+Rate Limiter
+        ↓
+Cache Flow
+        ↓
+Cache Patterns
+        ↓
+Distributed Cache
+        ↓
+CDN
+        ↓
+CAP Theorem
+        ↓
+Replication
+        ↓
+Sharding
+        ↓
+Distributed Lock
+        ↓
+Event Driven Architecture
+        ↓
+Microservices
+```
+
+---
+
 ## Engineering Focus Areas
 
 This repository focuses heavily on:
@@ -405,6 +441,21 @@ Production architecture engineering requires understanding:
 - how operational constraints shape engineering decisions
 
 This repository prioritizes operational architecture understanding over memorizing architecture patterns.
+
+---
+
+## Architecture Diagram Library
+
+The repository contains a production-focused visual architecture library covering the most common distributed systems, scalability patterns, reliability engineering concepts, and system design building blocks.
+
+### Traffic Management
+
+```text
+Load Balancer
+        ↓
+API Gateway
+        ↓
+Rate Limiter
 
 ---
 
