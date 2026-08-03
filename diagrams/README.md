@@ -1,254 +1,248 @@
 # System Design Diagrams
 
-Architecture diagrams repository for system design interview preparation, distributed systems understanding and production architecture learning.
+Visual architecture reference library for distributed systems, scalability engineering, reliability engineering, and system design interview preparation.
 
-Diagrams improve understanding of:
-
-- Distributed Systems
-- Scalability Patterns
-- Reliability Engineering
-- Infrastructure Design
-- Production Architecture
-- Data Flow
-- Failure Handling
-- Interview Preparation
+The goal of this section is to help engineers understand how production systems are built, scaled, protected, and operated through architecture diagrams and implementation patterns.
 
 ---
 
-## Directory Structure
+## Learning Path
+
+Recommended learning order:
 
 ```text
-diagrams
-├── README.md
-├── api-gateway/
-├── cache-flow/
-├── cache-patterns/
-├── cap-theorem/
-├── cdn-flow/
-├── distributed-cache/
-├── distributed-lock/
-├── event-driven/
-├── load-balancer-flow/
-├── microservices/
-├── rate-limiter/
-├── replication/
-└── sharding/
+Traffic Management
+        ↓
+Caching
+        ↓
+Distributed Systems
+        ↓
+Architecture Patterns
+        ↓
+Application Design
 ```
 
-Current Coverage:
-
-- 13 diagram categories
-- Interview focused diagrams
-- Architecture visualization
-- Production flow understanding
-- Scalability patterns
-
 ---
 
-## Diagram Coverage
+## Diagram Roadmap
 
-### API Gateway
+### Traffic Management
 
-Coverage:
+```text
+load-balancer-flow
+        ↓
+api-gateway
+        ↓
+rate-limiter
+```
 
-- Routing
+Topics covered:
+
+- Traffic distribution
+- Request routing
 - Authentication
 - Authorization
-- Rate Limiting
-- Request Validation
-
-Interview Focus:
-
-- API Gateway vs Load Balancer
-- Centralized Traffic Management
+- API protection
+- Service scalability
 
 ---
 
-### Cache Systems
+### Caching & Performance
 
-Coverage:
+```text
+cache-flow
+        ↓
+cache-patterns
+        ↓
+distributed-cache
+        ↓
+cdn-flow
+```
 
-- Cache Flow
-- Cache Patterns
-- Distributed Cache
+Topics covered:
 
-Interview Focus:
-
-- Cache Aside
-- Write Through
-- Write Behind
-- Cache Scaling
-
----
-
-### CDN
-
-Coverage:
-
-- Edge Location
-- Cache Hit
-- Cache Miss
-- Content Delivery
-
-Interview Focus:
-
-- CDN Strategy
-- Latency Optimization
+- Cache architecture
+- Cache strategies
+- Distributed caching
+- Content delivery
+- Latency reduction
+- Database offloading
 
 ---
 
 ### Distributed Systems
 
-Coverage:
+```text
+cap-theorem
+        ↓
+replication
+        ↓
+sharding
+        ↓
+distributed-lock
+```
 
-- CAP Theorem
-- Distributed Lock
-- Event Driven Architecture
-- Replication
-- Sharding
+Topics covered:
 
-Interview Focus:
-
-- Reliability
-- Horizontal Scaling
-- Distributed Coordination
-
----
-
-### Infrastructure Patterns
-
-Coverage:
-
-- API Gateway
-- Load Balancer
-- Rate Limiter
-- Microservices
-
-Interview Focus:
-
-- Traffic Distribution
-- Service Protection
-- Scalability Design
-- Reliability Patterns
+- Consistency models
+- High availability
+- Horizontal scaling
+- Database scaling
+- Distributed coordination
+- Fault tolerance
 
 ---
 
-## Diagram Standards
-
-Recommended structure:
+### Architecture Patterns
 
 ```text
-Requirements
-↓
+event-driven
+        ↓
+microservices
+```
+
+Topics covered:
+
+- Asynchronous communication
+- Event streaming
+- Service decomposition
+- Distributed transactions
+- Service discovery
+- Reliability patterns
+
+---
+
+## Current Coverage
+
+```text
+diagrams
+├── api-gateway
+├── cache-flow
+├── cache-patterns
+├── cap-theorem
+├── cdn-flow
+├── distributed-cache
+├── distributed-lock
+├── event-driven
+├── load-balancer-flow
+├── microservices
+├── rate-limiter
+├── replication
+└── sharding
+```
+
+Current focus:
+
+```text
+Production Architecture
+Distributed Systems
+Scalability Patterns
+Reliability Engineering
+Infrastructure Components
+System Design Interviews
+```
+
+---
+
+## Diagram Structure Standard
+
+Every diagram should explain:
+
+```text
+Why It Matters
+        ↓
 Architecture
-↓
-Components
-↓
-Data Flow
-↓
-Scaling
-↓
-Reliability
-↓
+        ↓
+Request Flow
+        ↓
+Scaling Strategy
+        ↓
+Failure Scenarios
+        ↓
+Production Examples
+        ↓
 Tradeoffs
+        ↓
+Interview Questions
+        ↓
+Quick Revision
 ```
 
-Diagram guidelines:
-
-- Keep diagrams simple
-- Use top to bottom flow
-- Show bottlenecks
-- Show scaling components
-- Show failure handling
-- Keep naming consistent
-- Show failure points
-- Prefer production flow
+This ensures consistency across the entire repository.
 
 ---
 
-## Diagram Ownership
-
-Purpose of this folder:
+## Relationship With Other Sections
 
 ```text
-diagrams/
-→ Visual understanding
-→ Architecture flow
-→ Scaling visualization
-→ Infrastructure understanding
-```
+questions-answers
+        ↓
+Interview Discussion
 
-Diagram folders complement concepts from other sections:
+hld
+        ↓
+System Design Building Blocks
 
-```text
-questions-answers/
-→ Interview tradeoffs
+design-app
+        ↓
+Complete Production Systems
 
-hld/
-→ Reusable building blocks
-
-design-app/
-→ End to end production systems
-
-diagrams/
-→ Visual architecture understanding
-```
-
-Goal:
-
-- Faster revision
-- Better interview explanation
-- Better architecture visualization
-
----
-
-## Future Diagram Expansion
-
-Planned areas:
-
-```text
-Observability Systems
-Cloud Infrastructure
-Data Platform Systems
-AI Platform Systems
-Developer Platform Systems
-FinTech Systems
-Search Systems
+diagrams
+        ↓
+Visual Architecture Understanding
 ```
 
 ---
 
-## Interview Tip
+## What This Section Does Not Cover
 
-Strong system design explanation:
+This section focuses on reusable architecture concepts.
 
-```text
-Requirements
-↓
-Architecture
-↓
-Database
-↓
-Cache
-↓
-Scaling
-↓
-Reliability
-↓
-Tradeoffs
-```
+It does not attempt to provide:
 
-Visual explanation improves interview discussions.
+- End-to-end application designs
+- Product-specific architectures
+- Cloud provider implementation guides
+- Coding implementations
+
+Those topics belong elsewhere in the repository.
+
+---
+
+## Why These Diagrams Matter
+
+Understanding architecture visually makes it easier to:
+
+- Explain systems in interviews
+- Understand scaling decisions
+- Understand reliability patterns
+- Learn distributed systems concepts
+- Reason about production failures
+
+Many system design discussions become significantly easier once the underlying architecture patterns are familiar.
 
 ---
 
 ## Quick Revision
 
-- Visual flow improves architecture understanding
-- Diagrams simplify distributed systems learning
-- Reliability patterns become easier to revise
-- Scalability concepts become easier to explain
-- Production systems become easier to understand
-- Visual explanation improves interview performance
+```text
+Traffic
+→ Load Balancer
+→ API Gateway
+→ Rate Limiter
 
----
+Performance
+→ Cache
+→ Distributed Cache
+→ CDN
+
+Distributed Systems
+→ CAP
+→ Replication
+→ Sharding
+→ Distributed Lock
+
+Architecture
+→ Event Driven
+→ Microservices
+```

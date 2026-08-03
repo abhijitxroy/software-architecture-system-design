@@ -1,25 +1,44 @@
 # CAP Theorem Diagram
 
-## Definition
+## Why It Matters
 
-CAP Theorem states that a distributed system can guarantee only two out of three properties:
+CAP Theorem is one of the most important concepts in distributed systems.
+
+It explains the tradeoffs distributed systems must make when network partitions occur.
+
+CAP stands for:
 
 - Consistency (C)
 - Availability (A)
 - Partition Tolerance (P)
 
-Interview Tip:
+Understanding CAP helps engineers design:
 
-Distributed systems must always handle network partition.
+- Databases
+- Distributed systems
+- Microservices
+- Cloud platforms
+- Global applications
 
-So real choice becomes:
+CAP is frequently discussed in system design interviews.
+
+---
+
+## What Is CAP Theorem?
+
+CAP Theorem states:
+
+> During a network partition, a distributed system can guarantee either Consistency or Availability, but not both.
+
+In practice:
 
 ```text
-CP
-
-or
-
-AP
+Partition Tolerance
+        ↓
+Mandatory
+        ↓
+Choose:
+CP or AP
 ```
 
 ---
@@ -28,117 +47,163 @@ AP
 
 ### Consistency (C)
 
-All users see same latest data.
+All clients see the same data at the same time.
 
-Example:
+```mermaid
+flowchart TD
+
+    Client1[Client A]
+    Client2[Client B]
+
+    DB[(Database)]
+
+    Client1 --> DB
+    Client2 --> DB
+```
+
+If Client A writes data:
 
 ```text
-User A Updates Profile
+Balance = ₹500
+```
 
-↓
+Client B immediately sees:
 
-All Servers Show Updated Value
+```text
+Balance = ₹500
 ```
 
 Benefits:
 
 - Correct data
 - Predictable behavior
+- Strong guarantees
 
-Example Systems:
+Common Examples:
 
 - Banking Systems
-- Payment Systems
+- Payment Platforms
+- Inventory Systems
 
 ---
 
 ### Availability (A)
 
-Every request gets response.
+Every request receives a response.
 
-Even if some nodes fail.
+```mermaid
+flowchart TD
 
-Example:
+    User[User Request]
+    Service[Distributed System]
+    Response[Response Returned]
+
+    User --> Service
+    Service --> Response
+```
+
+Even during failures:
 
 ```text
-User Request
-
-↓
-
-System Responds Always
+Request
+      ↓
+Response Always Returned
 ```
 
 Benefits:
 
 - Better uptime
 - Better user experience
+- Fault tolerance
 
-Example Systems:
+Common Examples:
 
 - Social Media
-- E-Commerce
+- Content Platforms
+- Search Systems
 
 ---
 
 ### Partition Tolerance (P)
 
-System continues working despite network failures.
+System continues operating despite network failures.
 
-Example:
+### Before Partition
 
-Before issue:
+```mermaid
+flowchart LR
 
-```text
-Server A
+    A[Node A]
+    B[Node B]
 
-↓
-
-Server B
+    A --- B
 ```
 
-Network failure:
+### During Partition
 
-```text
-Server A X Server B
+```mermaid
+flowchart LR
+
+    A[Node A]
+
+    B[Node B]
+
+    A -. Network Failure .- B
 ```
 
-System still operates.
+Network communication is lost.
 
-Partition tolerance is mandatory in distributed systems.
+The system must continue operating.
+
+Because network failures are unavoidable:
+
+```text
+Partition Tolerance
+      ↓
+Mandatory
+```
+
+for distributed systems.
 
 ---
 
 ## CAP Visualization
 
-```text
-        Consistency
-             /\
-            /  \
-           /    \
-          /      \
-         /        \
-Availability ---- Partition Tolerance
+```mermaid
+flowchart TD
+
+    C[Consistency]
+    A[Availability]
+    P[Partition Tolerance]
+
+    C --- A
+    A --- P
+    P --- C
 ```
 
-Cannot guarantee:
+The challenge:
 
 ```text
-C + A + P
-```
+Cannot Guarantee
 
-Together.
+Consistency
++
+Availability
++
+Partition Tolerance
+
+Simultaneously During Partition
+```
 
 ---
 
-## CP System
+## CP Systems
 
 Choose:
 
 ```text
 Consistency
-
 +
-
 Partition Tolerance
 ```
 
@@ -148,357 +213,48 @@ Sacrifice:
 Availability
 ```
 
-Example:
+### Behavior During Failure
 
-Network failure:
+```mermaid
+flowchart TD
 
-```text
-Reject Request
+    Request[Client Request]
 
-↓
+    Partition[Network Partition]
 
-Maintain Correct Data
+    Reject[Reject Request]
+
+    Request --> Partition
+    Partition --> Reject
 ```
 
-Examples:
+System refuses requests rather than returning potentially incorrect data.
 
-- HBase
-- MongoDB (certain configurations)
+Advantages:
 
-Best for:
+- Strong correctness
+- No stale data
+
+Disadvantages:
+
+- Reduced availability
+
+Best For:
 
 - Banking
-- Financial systems
-
----
-
-## AP System
-
-Choose:
-
-```text
-Availability
-
-+
-
-Partition Tolerance
-```
-
-Sacrifice:
-
-```text
-Strong Consistency
-```
-
-Example:
-
-```text
-Request Accepted
-
-↓
-
-Data Sync Later
-```
-
-Examples:
-
-- Cassandra
-- DynamoDB
-
-Best for:
-
-- Social Media
-- Feed Systems
-
----
-
-## Real World Example
-
-Instagram Like Count:
-
-User A:
-
-```text
-100 Likes
-```
-
-User B:
-
-```text
-99 Likes
-```
-
-Few seconds later:
-
-```text
-100 Likes
-```
-
-System favors:
-
-```text
-Availability
-```
-
-Example:
-
-AP system.
-
----
-
-## Banking Example
-
-Balance Update:
-
-```text
-₹1000
-
-↓
-
-₹500
-```
-
-All servers must show:
-
-```text
-₹500
-```
-
-System favors:
-
-```text
-Consistency
-```
-
-Example:
-
-CP system.
-
----
-
-## CAP Interview Questions
-
-### Q1. Can distributed systems support C + A + P?
-
-No.
-
-Only two possible.
-
----
-
-### Q2. Why Partition Tolerance mandatory?
-
-Network failures happen.
-
-Distributed systems must survive.
-
----
-
-### Q3. Banking prefers CP or AP?
-
-CP.
-
----
-
-### Q4. Social media prefers CP or AP?
-
-Mostly AP.
-
----
-
-## Quick Revision
-
-- C → Same latest data
-- A → Always response
-- P → Network failure tolerance
-- CP → Correctness priority
-- AP → Availability priority
-- Banking → CP
-- Social Media → AP
-# CAP Theorem Diagram
-
-## Purpose
-
-CAP Theorem explains tradeoffs in distributed systems.
-
-Goals:
-
-- Understand distributed system behavior
-- Learn consistency tradeoffs
-- Design reliable systems
-- Understand network partition handling
-- Improve system design decisions
-
----
-
-## What Is CAP Theorem?
-
-Distributed systems can guarantee only two properties during network partition.
-
-Properties:
-
-- Consistency (C)
-- Availability (A)
-- Partition Tolerance (P)
-
-Interview Rule:
-
-```text
-Distributed Systems
-↓
-Partition Happens
-↓
-Choose:
-CP
-or
-AP
-```
-
----
-
-## Consistency (C)
-
-Definition:
-
-All users see same latest data.
-
-Example:
-
-```text
-User Updates Profile
-↓
-All Servers Show Same Value
-```
-
-Benefits:
-
-- Correct data
-- Predictable behavior
-
-Best For:
-
-- Banking systems
-- Payment systems
-
----
-
-## Availability (A)
-
-Definition:
-
-System always responds.
-
-Example:
-
-```text
-Request
-↓
-System Responds
-```
-
-Benefits:
-
-- Better uptime
-- Better user experience
-
-Best For:
-
-- Social platforms
-- E commerce systems
-
----
-
-## Partition Tolerance (P)
-
-Definition:
-
-System continues operating despite network failure.
-
-Before Failure:
-
-```text
-Node A
-↓
-Node B
-```
-
-Network Partition:
-
-```text
-Node A X Node B
-```
-
-System continues working.
-
-Interview Rule:
-
-```text
-Partition Tolerance
-→ Mandatory
-```
-
----
-
-## CAP Visualization
-
-```text
-       Consistency
-            /\
-           /  \
-          /    \
-         /      \
-Availability----Partition Tolerance
-```
-
-Impossible:
-
-```text
-C + A + P
-```
-
-Together during partition.
-
----
-
-## CP System
-
-Choose:
-
-```text
-Consistency
-+
-Partition Tolerance
-```
-
-Sacrifice:
-
-```text
-Availability
-```
-
-Example:
-
-```text
-Network Failure
-↓
-Reject Request
-↓
-Protect Data Correctness
-```
+- Payments
+- Financial Platforms
 
 Examples:
 
 - HBase
+- ZooKeeper
+- Etcd
 - MongoDB (certain configurations)
-
-Best For:
-
-- Banking systems
-- Financial systems
 
 ---
 
-## AP System
+## AP Systems
 
 Choose:
 
@@ -514,29 +270,83 @@ Sacrifice:
 Strong Consistency
 ```
 
-Example:
+### Behavior During Failure
 
-```text
-Request Accepted
-↓
-Data Sync Later
+```mermaid
+flowchart TD
+
+    Request[Client Request]
+
+    Accept[Accept Request]
+
+    Sync[Data Sync Later]
+
+    Request --> Accept
+    Accept --> Sync
 ```
+
+System remains available but data may temporarily differ.
+
+Advantages:
+
+- High availability
+- Better user experience
+
+Disadvantages:
+
+- Temporary inconsistency
+
+Best For:
+
+- Social Platforms
+- Feed Systems
+- Messaging Systems
 
 Examples:
 
 - Cassandra
 - DynamoDB
-
-Best For:
-
-- Feed systems
-- Social platforms
+- Riak
 
 ---
 
-## Production Example
+## Strong Consistency vs Eventual Consistency
 
-Social Feed:
+### Strong Consistency
+
+```text
+User A Updates Value
+        ↓
+All Users Immediately See Update
+```
+
+Characteristics:
+
+- Correctness prioritized
+- Slower operations possible
+
+---
+
+### Eventual Consistency
+
+```text
+User A Updates Value
+        ↓
+Different Nodes Temporarily Differ
+        ↓
+Eventually Synchronize
+```
+
+Characteristics:
+
+- Better availability
+- Better scalability
+
+---
+
+## Real-World Example: Social Media
+
+Instagram Like Count:
 
 ```text
 User A
@@ -544,11 +354,16 @@ User A
 
 User B
 → 99 Likes
-
-Few Seconds Later
-↓
-100 Likes
 ```
+
+Few seconds later:
+
+```text
+User B
+→ 100 Likes
+```
+
+This is acceptable.
 
 System favors:
 
@@ -556,24 +371,35 @@ System favors:
 Availability
 ```
 
+Classification:
+
+```text
+AP System
+```
+
 ---
 
-## Banking Example
+## Real-World Example: Banking
+
+Account Balance:
 
 ```text
-Balance
-1000
-↓
-500
+₹1000
 ```
 
-Requirement:
+Withdrawal:
 
 ```text
-All Servers
-↓
-500
+₹500
 ```
+
+All nodes must immediately agree:
+
+```text
+₹500
+```
+
+Showing different balances is unacceptable.
 
 System favors:
 
@@ -581,32 +407,138 @@ System favors:
 Consistency
 ```
 
----
-
-## Interview Notes
-
-Common discussion:
+Classification:
 
 ```text
-CP vs AP
-
-Partition Tolerance Mandatory
-
-Strong Consistency vs Eventual Consistency
+CP System
 ```
+
+---
+
+## CAP and Modern Databases
+
+| Database | Preference |
+|----------|----------|
+| Cassandra | AP |
+| DynamoDB | AP |
+| Riak | AP |
+| ZooKeeper | CP |
+| Etcd | CP |
+| HBase | CP |
+| MongoDB | Configurable |
+| PostgreSQL | Primarily CP |
+
+---
+
+## Common Misconceptions
+
+### CAP Does Not Mean Choosing Any Two
+
+Incorrect:
+
+```text
+CA
+CP
+AP
+```
+
+Reality:
+
+```text
+Partition Happens
+        ↓
+Choose CP or AP
+```
+
+Distributed systems cannot ignore partitions.
+
+---
+
+### Availability Is Not Uptime
+
+Availability in CAP means:
+
+```text
+Every Request Receives Response
+```
+
+It does not mean:
+
+```text
+99.99% Service Availability
+```
+
+Those are different concepts.
+
+---
+
+## Production Tradeoffs
+
+### Choose CP When
+
+```text
+Data Correctness Critical
+```
+
+Examples:
+
+- Banking
+- Payments
+- Inventory
+
+---
+
+### Choose AP When
+
+```text
+User Experience Critical
+```
+
+Examples:
+
+- Social Media
+- Search
+- Content Platforms
+
+---
+
+## Interview Questions
+
+### Basic
+
+- What is CAP Theorem?
+- What does C mean?
+- What does A mean?
+- What does P mean?
+
+### Intermediate
+
+- Why is Partition Tolerance mandatory?
+- CP vs AP?
+- Strong Consistency vs Eventual Consistency?
+
+### Advanced
+
+- How does DynamoDB relate to CAP?
+- How does Cassandra relate to CAP?
+- Can a distributed system support C + A + P?
+- How would you choose between CP and AP?
 
 ---
 
 ## Quick Revision
 
 ```text
-C
+CAP
+→ Consistency Availability Partition Tolerance
+
+Consistency
 → Same Latest Data
 
-A
-→ Always Respond
+Availability
+→ Every Request Gets Response
 
-P
+Partition Tolerance
 → Survive Network Failure
 
 CP
@@ -614,4 +546,30 @@ CP
 
 AP
 → Availability Priority
+
+Banking
+→ CP
+
+Social Media
+→ AP
+
+Eventual Consistency
+→ Synchronize Later
 ```
+
+---
+
+## Key Concepts
+
+| Concept | Description |
+|----------|----------|
+| Consistency | Same data visible everywhere |
+| Availability | Every request receives response |
+| Partition Tolerance | Survive network failures |
+| CP System | Consistency prioritized |
+| AP System | Availability prioritized |
+| Strong Consistency | Immediate synchronization |
+| Eventual Consistency | Synchronization over time |
+| Network Partition | Communication failure between nodes |
+| CAP Tradeoff | CP vs AP decision |
+| Distributed System | Multiple communicating nodes |
